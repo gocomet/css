@@ -1,6 +1,6 @@
 # Airbnb CSS / Sass Styleguide
 
-*A mostly reasonable approach to CSS and Sass*
+*A mostly reasonable approach to CSS and Sass. Forked from Airbnb, and tweaked to suit ourselves a little better.*
 
 ## Table of Contents
 
@@ -22,6 +22,7 @@
     - [Mixins](#mixins)
     - [Extend directive](#extend-directive)
     - [Nested selectors](#nested-selectors)
+    - [Media Queries](#media-queries)
   1. [Translation](#translation)
 
 ## Terminology
@@ -172,6 +173,18 @@ We recommend creating JavaScript-specific classes to bind to, prefixed with `.js
 <button class="btn btn-primary js-request-to-book">Request to Book</button>
 ```
 
+JS Hooks using data-attributes are also acceptable:
+
+```html
+<button class="btn btn-primary" data-request-to-book>Request to Book</button>
+```
+
+We allow this because you may want to make your JS Hooks more flexible by using a data-attribute's value. For example:
+
+```html
+<button class="btn btn-primary" data-ajax-submit="#request-to-book-form">Request to Book</button>
+```
+
 ### Border
 
 Use `0` instead of `none` to specify that a style has no border.
@@ -201,7 +214,19 @@ Use `0` instead of `none` to specify that a style has no border.
 
 ### Ordering of property declarations
 
-1. Property declarations
+1. `@include` declarations
+
+    Grouping `@include`s at the beginning follows the programming practice of including "dependencies" first, and provides added flexibility if/when we want to overwrite rules defined in the `@include`.
+
+    ```scss
+    .btn-checkout {
+      @include display-font;
+      font-weight: 700;
+      // ...
+    }
+    ```
+
+2. Property declarations
 
     List all standard property declarations, anything that isn't an `@include` or a nested selector.
 
@@ -209,19 +234,6 @@ Use `0` instead of `none` to specify that a style has no border.
     .btn-green {
       background: green;
       font-weight: bold;
-      // ...
-    }
-    ```
-
-2. `@include` declarations
-
-    Grouping `@include`s at the end makes it easier to read the entire selector.
-
-    ```scss
-    .btn-green {
-      background: green;
-      font-weight: bold;
-      @include transition(background 0.5s ease);
       // ...
     }
     ```
@@ -279,8 +291,58 @@ Again: **never nest ID selectors!**
 
 If you must use an ID selector in the first place (and you should really try not to), they should never be nested. If you find yourself doing this, you need to revisit your markup, or figure out why such strong specificity is needed. If you are writing well formed HTML and CSS, you should **never** need to do this.
 
-## Translation
+### Media Queries
 
-  This style guide is also available in other languages:
-  
-  - ![cn](https://raw.githubusercontent.com/gosquared/flags/master/flags/flags/shiny/24/China.png) **Chinese (Simplified)**: [Zhangjd/css-style-guide](https://github.com/Zhangjd/css-style-guide)
+*Always nest media queries in selectors*
+
+*Never nest selectors in media queries*
+
+**Good**
+
+```scss
+.mobile-menu {
+  display: block;
+  @media #{$desktop} {
+    display: none;
+  }
+}
+```
+
+**Bad**
+
+```scss
+.mobile-menu {
+  display: block;
+}
+@media #{$desktop} {
+  .mobile-menu {
+    display: none;
+  }
+}
+```
+
+Nesting media queries in selectors, and not the other way around, will keep your code readable, save you from queryception and compilation bugs. For example:
+
+**Bad**
+
+```scss
+.header {
+  .desktop-menu {
+    display: none;
+  }
+
+  @media #{$desktop} {
+    .desktop-menu {
+      display: block;
+
+      // ... a bunch of other rules and selectors ...
+
+      .menu-link {
+        @media #{$tablet} {
+          // this media query is nested in a different media query!
+        }
+      }
+    }
+  }
+}
+```

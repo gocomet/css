@@ -23,7 +23,7 @@
     - [Extend directive](#extend-directive)
     - [Nested selectors](#nested-selectors)
     - [Media Queries](#media-queries)
-  1. [Translation](#translation)
+  1. [Folder Structure](#folder-structure)
 
 ## Terminology
 
@@ -344,3 +344,40 @@ Nesting media queries in selectors, and not the other way around, will keep your
   }
 }
 ```
+
+## Folder Structure
+
+We structure our Sass files in a certain way to keep our projects consistent and easy-to-use. The folder structure is this:
+
+- `scss/core`
+
+  Where we put the core parts of our project Sass. All/most other files will depend on these variables, mixins, functions, etc: color palette, fonts, utility functions, utility mixins, etc.
+
+- `scss/vendor`
+
+  Where we put our vendor library Sass: things like Foundation, Fontawesome, Slick, etc.
+
+- `scss/components`
+
+  Where we put our reusable Scss components. These might contain a mixin or a presentational CSS class (OOCSS, BEM, or otherwise). Whatever the case, the filename should match the output. For example, `button.scss` should output `.button {}` or `@mixin button {}`
+
+- `scss/snippets`
+
+  Where we put our styles applied to a specific `.liquid` snippet. The file should define styles for that class, should have the same name, and should exaclty match a corresponding liquid snippet. Take the following example:
+
+  - there is a liquid snippet in the theme: `/theme/snippets/newsletter-popup.liquid`
+  - that file is wrapped in a div: `<div class="newsletter-popup">Newsletter popup stuff in here</div>`
+  - we have a Sass file: `/src/scss/snippets/newsletter-popup.scss`
+  - that file defines styles for the `.newsletter-popup` class: `.newsletter-popup { /* styles in here */ }`
+
+- `scss/templates`
+
+  Where we put styles for our liquid templates. These follow the same conventions as with snippets, but with one difference:
+
+  - `.liquid` template files get wrapped with a slightly different classname.
+  - For example: `templates/page.liquid` should contain `<div class="page-template">Page template in here</div>`
+  - similarly, `scss/templates/page.scss` should output `.page-template { /* styles here */}`
+
+- `scss/layout`
+
+  Where we put our layout styles. This should define the relationships between the various parts of the page, IE. header, body, and footer.

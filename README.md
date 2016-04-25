@@ -231,9 +231,9 @@ Use `0` instead of `none` to specify that a style has no border.
     List all standard property declarations, anything that isn't an `@include` or a nested selector.
 
     ```scss
-    .btn-green {
-      background: green;
-      font-weight: bold;
+    .btn-checkout {
+      background-color: #0f0;
+      font-weight: 700;
       // ...
     }
     ```
@@ -244,9 +244,7 @@ Use `0` instead of `none` to specify that a style has no border.
 
     ```scss
     .btn {
-      background: green;
-      font-weight: bold;
-      @include transition(background 0.5s ease);
+      @include display-font;
 
       .icon {
         margin-right: 10px;
@@ -321,7 +319,7 @@ If you must use an ID selector in the first place (and you should really try not
 }
 ```
 
-Nesting media queries in selectors, and not the other way around, will keep your code readable, save you from queryception and compilation bugs. For example:
+Nesting media queries in selectors, and not the other way around, will keep your code readable, and save you from queryception and compilation bugs. For example:
 
 **Bad**
 
@@ -339,7 +337,7 @@ Nesting media queries in selectors, and not the other way around, will keep your
 
       .menu-link {
         @media #{$tablet} {
-          // this media query is nested in a different media query!
+          // Oh no! This media query is nested in a different media query!
         }
       }
     }

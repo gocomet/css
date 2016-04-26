@@ -260,6 +260,8 @@ Prefer dash-cased variable names (e.g. `$my-variable`) over camelCased or snake_
 
 Mixins should be used to DRY up your code, add clarity, or abstract complexity--in much the same way as well-named functions. Mixins that accept no arguments can be useful for this, but note that if you are not compressing your payload (e.g. gzip), this may contribute to unnecessary code duplication in the resulting styles.
 
+When creating a mixin, never use media queries inside of your mixin. Redefine the include definition in its own media query at the selector level.
+
 ### Extend directive
 
 `@extend` should be avoided because it has unintuitive and potentially dangerous behavior, especially when used with nested selectors. Even extending top-level placeholder selectors can cause problems if the order of selectors ends up changing later (e.g. if they are in other files and the order the files are loaded shifts). Gzipping should handle most of the savings you would have gained by using `@extend`, and you can DRY up your stylesheets nicely with mixins.
@@ -268,11 +270,25 @@ Mixins should be used to DRY up your code, add clarity, or abstract complexity--
 
 **Do not nest selectors more than three levels deep!**
 
+Where necessary, ::before, ::after, and @media queries can be added as a 4th level to a nesting chain for the 3rd level selector.
+
 ```scss
 .page-container {
+
   .content {
+
     .profile {
       // STOP!
+
+      &::before,
+      &::after{
+          content: '::before and ::after elements can be used as a 4th 'selector';
+      }
+
+      @media #{$desktop}{
+          // Media queries can be used as a 4th level 'selector'
+          display: block;
+      }
     }
   }
 }
@@ -300,6 +316,7 @@ If you must use an ID selector in the first place (and you should really try not
 ```scss
 .mobile-menu {
   display: block;
+
   @media #{$desktop} {
     display: none;
   }
@@ -312,7 +329,9 @@ If you must use an ID selector in the first place (and you should really try not
 .mobile-menu {
   display: block;
 }
+
 @media #{$desktop} {
+
   .mobile-menu {
     display: none;
   }
@@ -325,17 +344,20 @@ Nesting media queries in selectors, and not the other way around, will keep your
 
 ```scss
 .header {
+
   .desktop-menu {
     display: none;
   }
 
   @media #{$desktop} {
+
     .desktop-menu {
       display: block;
 
       // ... a bunch of other rules and selectors ...
 
       .menu-link {
+
         @media #{$tablet} {
           // Oh no! This media query is nested in a different media query!
         }

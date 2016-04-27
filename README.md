@@ -270,7 +270,7 @@ When creating a mixin, never use media queries inside of your mixin. Redefine th
 
 **Do not nest selectors more than three levels deep!**
 
-Where necessary, ::before, ::after, and @media queries can be added as a 4th level to a nesting chain for the 3rd level selector.
+Where necessary, :before, :after, and @media queries can be added as a 4th level to a nesting chain for the 3rd level selector.
 
 ```scss
 .page-container {
@@ -280,12 +280,12 @@ Where necessary, ::before, ::after, and @media queries can be added as a 4th lev
     .profile {
       // STOP!
 
-      &::before,
-      &::after{
-          content: '::before and ::after elements can be used as a 4th 'selector';
+      &:before,
+      &:after {
+          content: ':before and :after elements can be used as a 4th 'selector';
       }
 
-      @media #{$desktop}{
+      @media #{$desktop} {
           // Media queries can be used as a 4th level 'selector'
           display: block;
       }

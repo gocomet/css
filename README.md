@@ -24,6 +24,7 @@
     - [Nested selectors](#nested-selectors)
     - [Media Queries](#media-queries)
   1. [Folder Structure](#folder-structure)
+  1. [Formatting Your Sass Files](#formatting-your-sass-files)
 
 ## Terminology
 

@@ -67,7 +67,7 @@ Finally, properties are what give the selected elements of a rule declaration th
 
 ### Formatting
 
-* Use soft tabs (4 spaces) for indentation
+* Use soft tabs (2 spaces) for indentation
 * Prefer dashes over camelCasing in class names. Underscores are OK if you're using BEM (see [OOCSS and BEM](#oocss-and-bem) below).
 * Do not use ID selectors
 * When using multiple selectors in a rule declaration, give each selector its own line.
@@ -403,3 +403,15 @@ We structure our Sass files in a certain way to keep our projects consistent and
 - `scss/layout`
 
   Where we put our layout styles. This should define the relationships between the various parts of the page, IE. header, body, and footer.
+
+## Formatting Your Sass files
+
+Keeping our Sass file format consistent will reduce Git merge conflicts and all-around make our lives easy. You can set the correct indentation for your Sass files by default in Sublime. We'll do this using syntax-specific settings files for sublime.
+
+1. Add the `CSS.sublime-settings` and `Sass.sublime-settings` files to your computer's `~/Library/Application Support/Sublime Text 3/Packages/User/` folder.
+
+When you get a file that's improperly formatted, you can simply:
+
+1. make sure your file is using the correct syntax highlighting (select syntax from menu in bottom-right)
+2. highlight all text in file (`cmd + shift + a`)
+3. re-indent (`cmd + shift + r`)

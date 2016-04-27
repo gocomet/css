@@ -1,4 +1,4 @@
-# Airbnb CSS / Sass Styleguide
+# CSS / Sass Styleguide
 
 *A mostly reasonable approach to CSS and Sass. Forked from Airbnb, and tweaked to suit ourselves a little better.*
 
@@ -270,7 +270,7 @@ When creating a mixin, never use media queries inside of your mixin. Redefine th
 
 **Do not nest selectors more than three levels deep!**
 
-Where necessary, :before, :after, and @media queries can be added as a 4th level to a nesting chain for the 3rd level selector.
+Where necessary, `:before`, `:after`, and `@media` queries can be added as a 4th level to a nesting chain for the 3rd level selector.
 
 ```scss
 .page-container {
